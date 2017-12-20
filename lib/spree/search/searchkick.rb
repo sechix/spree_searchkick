@@ -3,10 +3,12 @@ module Spree
     class Searchkick < Spree::Core::Search::Base
       def retrieve_products
         @products = base_elasticsearch
+
       end
 
-      def base_elasticsearch
 
+      def base_elasticsearch
+        curr_page = page || 1
         Spree::Product.search(
           keyword_query,
           where: where_query,
@@ -16,7 +18,10 @@ module Spree
           includes: search_includes,
           smart_aggs: true,
           order: sorted,
+          page: curr_page,
+          per_page: per_page
         )
+
       end
 
       def where_query
@@ -52,27 +57,38 @@ module Spree
 
         fs[:price] = { ranges: [
             {to: 15},
-            {to: 25},
-            {to: 50},
-            {to: 75},
-            {to: 100},
-            {from: 100}]
+            {from:15, to: 30},
+            {from:30, to: 50},
+            {from:50, to: 70},
+            {from:70, to: 100},
+            {from:100, to: 150},
+            {from:150, to: 200},
+            {from:200, to: 250},
+            {from:250, to: 350},
+            {from:350},]
         }
-        fs[:price_rental] = { ranges: [
+        fs[:price_month] = { ranges: [
             {to: 15},
-            {to: 25},
-            {to: 50},
-            {to: 75},
-            {to: 100},
-            {from: 100}]
+            {from:15, to: 30},
+            {from:30, to: 50},
+            {from:50, to: 70},
+            {from:70, to: 100},
+            {from:100, to: 150},
+            {from:150, to: 200},
+            {from:200, to: 250},
+            {from:250, to: 350},
+            {from:350},]
         }
         fs[:price_points] = { ranges: [
-            {to: 15},
-            {to: 25},
             {to: 50},
-            {to: 75},
             {to: 100},
-            {from: 100}]
+            {to: 150},
+            {to: 200},
+            {to: 300},
+            {to: 400},
+            {to: 500},
+            {to: 600},
+            {from:800},]
         }
         fs
 
@@ -81,7 +97,7 @@ module Spree
       def add_search_filters(query)
         return query unless search
         search.each do |name, scope_attribute|
-          if name == 'price' or name == 'price_rental' or name == 'price_points'
+          if name == 'price' or name == 'price_month' or name == 'price_points'
             price_filter = process_price(scope_attribute)
             query.merge!(price: price_filter)
           else
@@ -94,7 +110,9 @@ module Spree
         [master: [:prices, :images]]
       end
       def prepare(params)
+
         super
+        
         @properties[:conversions] = params[:conversions]
         @sort = Spree::Core::SearchkickSorts.process_sorts(params, taxon)
       end

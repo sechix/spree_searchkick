@@ -8,7 +8,11 @@ module Spree
         end
         if aggregations.has_key? 'price'
           es_filters << self.process_filter('price', :price, aggregations['price'])
+        end
+        if aggregations.has_key? 'price_month'
           es_filters << self.process_filter('price_month', :price, aggregations['price_month'])
+        end
+        if aggregations.has_key? 'price_points'
           es_filters << self.process_filter('price_points', :points, aggregations['price_points'])
 
         end
@@ -29,15 +33,12 @@ module Spree
         case type
           when :price
             filter["buckets"].each do |bucket|
-              label =
-                  if bucket["from"] && bucket["to"]
-                    "€#{bucket['from'].to_i} - €#{bucket['to'].to_i}"
-                  elsif bucket["from"]
-                    "> €#{bucket['from'].to_i}"
-                  elsif bucket["to"]
-                    "< €#{bucket['to'].to_i}"
-                  end
-
+              label = "#{bucket['to'].to_i}"
+              options << { label: label, value: bucket["key"], count: bucket['doc_count']}
+            end
+          when :points
+            filter["buckets"].each do |bucket|
+              label = "#{bucket['to'].to_i}p"
               options << { label: label, value: bucket["key"], count: bucket['doc_count']}
             end
 
@@ -55,6 +56,7 @@ module Spree
 
         when :property
           values = filter["buckets"].map{|h| h["key"]}
+          values.sort!
           values.each {|t| options << {label: t, value: t }}
 
 

@@ -14,7 +14,6 @@ module Spree
           where: where_query,
           aggs: aggregations,
           fields: ["name_and_brand^5", "name^4", "brand^2", "description"],
-          match: :word_start,
           includes: search_includes,
           smart_aggs: true,
           order: sorted,
@@ -54,41 +53,22 @@ module Spree
         Spree::OptionType.filterable.each do |optiontype|
           fs[optiontype.filter_name.to_sym] = { stats: true }
         end
-
         fs[:price] = { ranges: [
-            {to: 15},
-            {from:15, to: 30},
-            {from:30, to: 50},
-            {from:50, to: 70},
-            {from:70, to: 100},
-            {from:100, to: 150},
-            {from:150, to: 200},
-            {from:200, to: 250},
-            {from:250, to: 350},
-            {from:350},]
+            {from:5, to: 500},]
         }
         fs[:price_month] = { ranges: [
-            {to: 15},
-            {from:15, to: 30},
-            {from:30, to: 50},
-            {from:50, to: 70},
-            {from:70, to: 100},
-            {from:100, to: 150},
-            {from:150, to: 200},
-            {from:200, to: 250},
-            {from:250, to: 350},
-            {from:350},]
+            {from:5, to: 500},]
         }
         fs[:price_points] = { ranges: [
             {to: 50},
-            {to: 100},
-            {to: 150},
-            {to: 200},
-            {to: 300},
-            {to: 400},
-            {to: 500},
-            {to: 600},
-            {from:800},]
+            {from:51, to: 100},
+            {from:101, to: 150},
+            {from:151, to: 200},
+            {from:201, to: 300},
+            {from:301, to: 400},
+            {from:401, to: 500},
+            {from:501, to: 600},
+            {from:601, to: 800},]
         }
         fs
 
@@ -97,9 +77,15 @@ module Spree
       def add_search_filters(query)
         return query unless search
         search.each do |name, scope_attribute|
-          if name == 'price' or name == 'price_month' or name == 'price_points'
+          if name == 'price'
             price_filter = process_price(scope_attribute)
             query.merge!(price: price_filter)
+          elsif name == 'price_month'
+            price_filter = process_price(scope_attribute)
+            query.merge!(price_month: price_filter)
+          elsif name == 'price_points'
+            price_filter = process_price(scope_attribute)
+            query.merge!(price_points: price_filter)
           else
             query.merge!(Hash[name, scope_attribute])
           end
@@ -112,7 +98,6 @@ module Spree
       def prepare(params)
 
         super
-        
         @properties[:conversions] = params[:conversions]
         @sort = Spree::Core::SearchkickSorts.process_sorts(params, taxon)
       end
@@ -127,7 +112,8 @@ module Spree
             unless parts.first == '*'
               from = [from, parts.first.to_f].compact.min
             end
-            unless parts.second == '*'
+
+            unless parts.second == '*' or parts.second == ' 500'
               to = [parts.second.to_f, to].compact.max
             end
           end

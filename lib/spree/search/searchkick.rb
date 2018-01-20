@@ -54,10 +54,10 @@ module Spree
           fs[optiontype.filter_name.to_sym] = { stats: true }
         end
         fs[:price] = { ranges: [
-            {from:5, to: 500},]
+            {from:5, to: 300},]
         }
         fs[:price_month] = { ranges: [
-            {from:5, to: 500},]
+            {from:5, to: 300},]
         }
         fs[:price_points] = { ranges: [
             {to: 50},
@@ -113,7 +113,7 @@ module Spree
               from = [from, parts.first.to_f].compact.min
             end
 
-            unless parts.second == '*' or parts.second == ' 500'
+            unless parts.second == '*' or parts.second == ' 300'
               to = [parts.second.to_f, to].compact.max
             end
           end

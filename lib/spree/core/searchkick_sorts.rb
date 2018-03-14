@@ -8,6 +8,8 @@ module Spree
             'popularity' => { sort: { conversions: :desc }, label: 'Popularity' },
             'price_asc' => { sort: { price: :asc }, label: 'Price Low to High' },
             'price_desc' => { sort: { price: :desc }, label: 'Price High to Low' },
+            'price_month_asc' => { sort: { price_month: :asc }, label: 'Price Month Low to High' },
+            'price_month_desc' => { sort: { price_month: :desc }, label: 'Price Month High to Low' },
             'newest' => { sort: { created_at: :desc }, label: 'Newest' }
         }
       end

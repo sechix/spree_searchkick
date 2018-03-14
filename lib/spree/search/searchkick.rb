@@ -61,14 +61,8 @@ module Spree
         }
         fs[:price_points] = { ranges: [
             {to: 50},
-            {from:51, to: 100},
-            {from:101, to: 150},
-            {from:151, to: 200},
-            {from:201, to: 300},
-            {from:301, to: 400},
-            {from:401, to: 500},
-            {from:501, to: 600},
-            {from:601, to: 800},]
+            {from:150, to: 151},
+            {from:450, to: 451},]
         }
         fs
 

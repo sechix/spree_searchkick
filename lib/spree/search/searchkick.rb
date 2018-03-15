@@ -15,7 +15,7 @@ module Spree
           aggs: aggregations,
           fields: ["name_and_brand^5", "name^4", "brand^2", "description"],
           includes: search_includes,
-          smart_aggs: false,
+          smart_aggs: true,
           order: sorted,
           page: curr_page,
           per_page: per_page

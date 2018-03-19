@@ -12,8 +12,8 @@ module Spree
         if aggregations.has_key? 'price_month'
           es_filters << self.process_filter('price_month', :price, aggregations['price_month'])
         end
-        if aggregations.has_key? 'price_points'
-          es_filters << self.process_filter('price_points', :points, aggregations['price_points'])
+        if aggregations.has_key? 'price_plan'
+          es_filters << self.process_filter('price_plan', :plan, aggregations['price_plan'])
 
         end
 
@@ -36,12 +36,10 @@ module Spree
               label = "#{bucket['to'].to_i}"
               options << { label: label, value: bucket["key"], count: bucket['doc_count']}
             end
-          when :points
-            filter["buckets"].each do |bucket|
-              label = "#{bucket['to'].to_i}p"
-              options << { label: label, value: bucket["key"], count: bucket['doc_count']}
-            end
-
+          when :plan
+            values = filter["buckets"].map{|h| h["key"]}
+            values.sort!
+            values.each {|t| options << {label: t, value: t }}
           when :taxon
             ids = filter["buckets"].map{|h| h["key"]}
             id_counts = Hash[filter["buckets"].map { |h| [h["key"], h["doc_count"]] }]

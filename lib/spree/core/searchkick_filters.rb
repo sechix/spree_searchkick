@@ -13,7 +13,7 @@ module Spree
           es_filters << self.process_filter('price_month', :price, aggregations['price_month'])
         end
 
-        es_filters << self.process_filter('price_plan', :plan, aggregations['price_plan'])
+        es_filters << self.process_filter('plan', :plan, aggregations['plan'])
 
         Spree::OptionType.filterable.each do |optiontype|
           es_filters << self.process_filter(optiontype.filter_name, :optiontype, aggregations[optiontype.name])
@@ -35,7 +35,7 @@ module Spree
               options << { label: label, value: bucket["key"], count: bucket['doc_count']}
             end
           when :plan
-            
+
             options << { label: 'plan1', value: 'plan1', count: 1}
             options << { label: 'plan2', value: 'plan2', count: 2}
             options << { label: 'plan3', value: 'plan3', count: 3}

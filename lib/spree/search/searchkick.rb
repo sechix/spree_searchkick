@@ -59,7 +59,7 @@ module Spree
         fs[:price_month] = { ranges: [
             {from:5, to: 300},]
         }
-        fs[:price_plan] = { stats: true }
+        fs[:plan] = { stats: true }
         fs
 
       end

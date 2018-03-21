@@ -12,10 +12,8 @@ module Spree
         if aggregations.has_key? 'price_month'
           es_filters << self.process_filter('price_month', :price, aggregations['price_month'])
         end
-        if aggregations.has_key? 'price_plan'
-          es_filters << self.process_filter('price_plan', :plan, aggregations['price_plan'])
 
-        end
+        es_filters << self.process_filter('price_plan', :plan, aggregations['price_plan'])
 
         Spree::OptionType.filterable.each do |optiontype|
           es_filters << self.process_filter(optiontype.filter_name, :optiontype, aggregations[optiontype.name])
@@ -37,9 +35,11 @@ module Spree
               options << { label: label, value: bucket["key"], count: bucket['doc_count']}
             end
           when :plan
-            values = filter["buckets"].map{|h| h["key"]}
-            values.sort!
-            values.each {|t| options << {label: t, value: t }}
+            
+            options << { label: 'plan1', value: 'plan1', count: 1}
+            options << { label: 'plan2', value: 'plan2', count: 2}
+            options << { label: 'plan3', value: 'plan3', count: 3}
+
           when :taxon
             ids = filter["buckets"].map{|h| h["key"]}
             id_counts = Hash[filter["buckets"].map { |h| [h["key"], h["doc_count"]] }]
@@ -52,10 +52,10 @@ module Spree
             optionsvalues = Spree::OptionValue.where(id: ids).order(name: :asc)
             optionsvalues.each {|t| options << {label: t.presentation, value: t.id }}
 
-        when :property
-          values = filter["buckets"].map{|h| h["key"]}
-          values.sort!
-          values.each {|t| options << {label: t, value: t }}
+          when :property
+            values = filter["buckets"].map{|h| h["key"]}
+            values.sort!
+            values.each {|t| options << {label: t, value: t }}
 
 
         end

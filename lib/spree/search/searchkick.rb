@@ -13,7 +13,7 @@ module Spree
           keyword_query,
           where: where_query,
           aggs: aggregations,
-          fields: ["name", "brand", "description"],
+          fields: ["name", "brand", "description", "taxon_names"],
           includes: search_includes,
           smart_aggs: true,
           order: sorted,

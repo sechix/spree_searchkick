@@ -59,6 +59,9 @@ module Spree
         fs[:price_month] = { ranges: [
             {from:5, to: 300},]
         }
+        fs[:price_week] = { ranges: [
+            {from:5, to: 300},]
+        }
         fs[:plan] = { stats: true }
         fs
 
@@ -73,6 +76,9 @@ module Spree
           elsif name == 'price_month'
             price_filter = process_price(scope_attribute)
             query.merge!(price_month: price_filter)
+          elsif name == 'price_week'
+            price_filter = process_price(scope_attribute)
+            query.merge!(price_week: price_filter)
           else
             query.merge!(Hash[name, scope_attribute])
           end

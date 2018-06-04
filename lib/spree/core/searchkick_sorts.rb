@@ -10,6 +10,8 @@ module Spree
             'price_desc' => { sort: { price: :desc }, label: 'Price High to Low' },
             'price_month_asc' => { sort: { price_month: :asc }, label: 'Price Month Low to High' },
             'price_month_desc' => { sort: { price_month: :desc }, label: 'Price Month High to Low' },
+            'price_week_asc' => { sort: { price_week: :asc }, label: 'Price week Low to High' },
+            'price_week_desc' => { sort: { price_week: :desc }, label: 'Price week High to Low' },
             'newest' => { sort: { created_at: :desc }, label: 'Newest' }
         }
       end

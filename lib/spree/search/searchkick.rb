@@ -85,6 +85,13 @@ module Spree
               filter[:gt] = '50.0'
               price_filter = filter
               query.merge!(price: price_filter)
+
+            elsif scope_attribute.include?('buysale')
+              filter = {}
+              filter[:eq] = '32'
+              price_filter = filter
+              query.merge!(condition: price_filter)
+
             end
 
           else

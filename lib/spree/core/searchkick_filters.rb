@@ -49,6 +49,7 @@ module Spree
 
             options << { label: 'ocassional', value: 'ocassional', count: 1}
             options << { label: 'plans', value: 'plans', count: 2}
+            options << { label: 'buysale', value: 'buysale', count: 3}
 
           when :taxon
             ids = filter["buckets"].map{|h| h["key"]}

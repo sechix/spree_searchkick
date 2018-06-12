@@ -73,7 +73,7 @@ module Spree
           if name == 'price'
             price_filter = process_price(scope_attribute)
             query.merge!(price: price_filter)
-            
+
           elsif name == 'price_month'
             price_filter = process_price(scope_attribute)
             query.merge!(price_month: price_filter)
@@ -90,7 +90,7 @@ module Spree
               query.merge!(price: price_filter)
 
             elsif scope_attribute.include?('buysale')
-              query.merge!(condition: '32')
+              query.merge!(condition: '35')
 
             end
 

@@ -18,6 +18,8 @@ module Spree
 
         es_filters << self.process_filter('plan', :plan, aggregations['plan'])
 
+        es_filters << self.process_filter('renting', :renting, aggregations['renting'])
+
         Spree::OptionType.filterable.each do |optiontype|
           es_filters << self.process_filter(optiontype.filter_name, :optiontype, aggregations[optiontype.name])
         end
@@ -42,6 +44,11 @@ module Spree
             options << { label: 'plan1', value: 'plan1', count: 1}
             options << { label: 'plan2', value: 'plan2', count: 2}
             options << { label: 'plan3', value: 'plan3', count: 3}
+
+          when :renting
+
+            options << { label: 'ocassional', value: 'ocassional', count: 1}
+            options << { label: 'plans', value: 'plans', count: 2}
 
           when :taxon
             ids = filter["buckets"].map{|h| h["key"]}

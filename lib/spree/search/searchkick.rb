@@ -79,6 +79,14 @@ module Spree
           elsif name == 'price_week'
             price_filter = process_price(scope_attribute)
             query.merge!(price_week: price_filter)
+          elsif name == 'renting'
+            if scope_attribute.include?('ocassional')
+              filter = {}
+              filter[:gt] = '50.0'
+              price_filter = filter
+              query.merge!(price: price_filter)
+            end
+
           else
             query.merge!(Hash[name, scope_attribute])
           end

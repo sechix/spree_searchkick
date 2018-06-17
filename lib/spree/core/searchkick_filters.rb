@@ -15,6 +15,9 @@ module Spree
         if aggregations.has_key? 'price_week'
           es_filters << self.process_filter('price_week', :price, aggregations['price_week'])
         end
+        if aggregations.has_key? 'price_master'
+          es_filters << self.process_filter('price_master', :price, aggregations['price_master'])
+        end
 
         es_filters << self.process_filter('plan', :plan, aggregations['plan'])
 

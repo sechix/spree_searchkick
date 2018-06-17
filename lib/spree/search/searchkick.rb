@@ -62,6 +62,9 @@ module Spree
         fs[:price_week] = { ranges: [
             {from:5, to: 300},]
         }
+        fs[:price_master] = { ranges: [
+            {from:5, to: 300},]
+        }
         fs[:plan] = { stats: true }
         fs
 
@@ -81,6 +84,10 @@ module Spree
           elsif name == 'price_week'
             price_filter = process_price(scope_attribute)
             query.merge!(price_week: price_filter)
+
+          elsif name == 'price_master'
+            price_filter = process_price(scope_attribute)
+            query.merge!(price_master: price_filter)
 
           elsif name == 'renting'
             if scope_attribute.include?('ocassional')

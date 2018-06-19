@@ -92,7 +92,7 @@ module Spree
           elsif name == 'renting'
             if scope_attribute.include?('ocassional')
               filter = {}
-              filter[:gt] = '50.0'
+              filter[:gt] = '50'
               price_filter = filter
               query.merge!(price: price_filter)
 

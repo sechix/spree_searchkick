@@ -55,17 +55,11 @@ module Spree
             options << { label: 'buysale', value: 'buysale', count: 3}
 
           when :taxon
-            # ids = filter["buckets"].map{|h| h["key"]}
-            # id_counts = Hash[filter["buckets"].map { |h| [h["key"], h["doc_count"]] }]
-            # taxons = Spree::Taxon.where(id: ids).order(name: :asc)
-            # taxons.each { |t|
-            #   options << {label: t.name, value: t.id, count: id_counts[t.id] }}
-
-            taxons = Spree::Taxon.order(name: :asc)
-            i = 0
+            ids = filter["buckets"].map{|h| h["key"]}
+            id_counts = Hash[filter["buckets"].map { |h| [h["key"], h["doc_count"]] }]
+            taxons = Spree::Taxon.where(id: ids).order(name: :asc)
             taxons.each { |t|
-              i += 1
-              options << {label: t.name, value: t.id, count: i }}
+              options << {label: t.name, value: t.id, count: id_counts[t.id] }}
 
           when :optiontype
             ids = filter["buckets"].map{|h| h["key"]}

@@ -57,7 +57,7 @@ module Spree
           when :taxon
             ids = filter["buckets"].map{|h| h["key"]}
             id_counts = Hash[filter["buckets"].map { |h| [h["key"], h["doc_count"]] }]
-            taxons = Spree::Taxon.where(id: ids).order(name: :asc)
+            taxons = Spree::Taxon.order(name: :asc)
             taxons.each { |t|
               options << {label: t.name, value: t.id, count: id_counts[t.id] }}
 

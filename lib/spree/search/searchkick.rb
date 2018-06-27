@@ -15,7 +15,7 @@ module Spree
           aggs: aggregations,
           fields: ["name", "brand", "name_and_brand_taxons_descripction"],
           includes: search_includes,
-          smart_aggs: false,
+          smart_aggs: true,
           order: sorted,
           page: curr_page,
           per_page: per_page
@@ -44,7 +44,7 @@ module Spree
       def aggregations
         fs = {}
         Spree::Taxonomy.filterable.each do |taxonomy|
-          fs[taxonomy.filter_name.to_sym] = { stats: true }
+          fs[taxonomy.name.to_sym] = { stats: true }
         end
         Spree::Property.filterable.each do |property|
           fs[property.filter_name.to_sym] = { stats: true }

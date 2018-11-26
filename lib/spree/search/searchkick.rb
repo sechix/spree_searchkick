@@ -44,14 +44,14 @@ module Spree
       def aggregations
         fs = {}
         Spree::Taxonomy.filterable.each do |taxonomy|
-          fs[taxonomy.name.to_sym] = { stats: true }
+          fs[taxonomy.name.to_sym] = {  }
         end
         Spree::Property.filterable.each do |property|
-          fs[property.filter_name.to_sym] = { stats: true }
+          fs[property.filter_name.to_sym] = {  }
         end
 
         Spree::OptionType.filterable.each do |optiontype|
-          fs[optiontype.filter_name.to_sym] = { stats: true }
+          fs[optiontype.filter_name.to_sym] = {  }
         end
         fs[:price] = { ranges: [
             {from:5, to: 300},]
@@ -65,7 +65,7 @@ module Spree
         fs[:price_master] = { ranges: [
             {from:5, to: 300},]
         }
-        fs[:plan] = { stats: true }
+        fs[:plan] = {  }
         fs
 
       end

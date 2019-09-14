@@ -1,6 +1,6 @@
 Spree::Product.class_eval do
   # searchkick word_start: [:name], settings: {number_of_replicas: 0} unless respond_to?(:searchkick_index)
-  searchkick index_name: "#{Rails.application.class.parent_name.parameterize.underscore}_spree_products_#{Rails.env}", word_start: [:name, :brand, :name_and_brand, :description], settings: {number_of_replicas: 0} 
+  searchkick index_name: "#{Rails.application.class.parent_name.parameterize.underscore}_spree_products_#{Rails.env}", word_start: [:name, :brand, :name_and_brand, :description], settings: {number_of_replicas: 0} unless respond_to?(:searchkick_index)
 
   def search_data
     json = {

@@ -38,7 +38,7 @@ module Spree
           if taxon && taxon.respond_to?(:default_sort)
             taxon.default_sort
           else
-            'featured'
+            'newest'
           end
         else
           'relevance'

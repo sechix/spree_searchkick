@@ -14,7 +14,8 @@ module Spree
             'price_week_desc' => { sort: { price_week: :desc }, label: 'Price week High to Low' },
             'price_master_asc' => { sort: { price_master: :asc }, label: 'Price master Low to High' },
             'price_master_desc' => { sort: { price_master: :desc }, label: 'Price master High to Low' },
-            'newest' => { sort: { available_on: :desc }, label: 'Newest' }
+            'newest' => { sort: { available_on: :desc }, label: 'Newest' },
+            'brand' => { sort: { brand: :desc }, label: 'Brand' }
         }
       end
 
@@ -38,7 +39,7 @@ module Spree
           if taxon && taxon.respond_to?(:default_sort)
             taxon.default_sort
           else
-            'newest'
+            'brand'
           end
         else
           'relevance'

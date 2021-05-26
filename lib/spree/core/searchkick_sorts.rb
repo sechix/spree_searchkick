@@ -15,7 +15,7 @@ module Spree
             'price_master_asc' => { sort: { price_master: :asc }, label: 'Price master Low to High' },
             'price_master_desc' => { sort: { price_master: :desc }, label: 'Price master High to Low' },
             'newest' => { sort: { available_on: :desc }, label: 'Newest' },
-            'brand' => { sort: { featured: :desc, brand: :asc,  }, label: 'Brand' }
+            'brand' => { sort: { brand: :asc, featured: :desc }, label: 'Brand' }
         }
       end
 
